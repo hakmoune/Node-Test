@@ -1,6 +1,6 @@
 const express = require("express"); // Importer Express
 
-const app = express(); // Creer un application Express
+const app = express(); // Pour créer une application Express
 
 //un middleware
 app.use((req, res, next) => {

@@ -6,16 +6,18 @@ const app = require("./app");
 const normalizePort = val => {
   const port = parseInt(val, 10);
 
+  //Si ce n'est pas un nombre
   if (isNaN(port)) {
     return val;
   }
+  //Si c'est un nombre
   if (port >= 0) {
     return port;
   }
   return false;
 };
 const port = normalizePort(process.env.PORT || "3000");
-app.set("port", port);
+app.set("port", port); // Le port utilisé par l'app Express
 
 //la fonction errorHandler  recherche les différentes erreurs et les gère de manière appropriée.
 //Elle est ensuite enregistrée dans le serveur ;
@@ -52,3 +54,15 @@ server.on("listening", () => {
 });
 
 server.listen(port);
+
+/**
+ * 
+ * 
+const http = require('http');
+const app = require('./app');
+
+app.set('port', process.env.PORT || 3000);
+const server = http.createServer(app);
+
+server.listen(process.env.PORT || 3000);
+ */

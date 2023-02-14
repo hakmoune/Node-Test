@@ -1,6 +1,15 @@
 const express = require("express"); // Importer Express
+const mongoose = require("mongoose");
 
 const app = express(); // Pour créer une application Express
+
+mongoose
+  .connect(
+    "mongodb+srv://mehdi_1990:mehdi_1990@cluster0.85jqavd.mongodb.net/?retryWrites=true&w=majority",
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .then(() => console.log("Connexion à MongoDB réussie !"))
+  .catch(() => console.log("Connexion à MongoDB échouée !"));
 
 app.use(express.json()); //Ce middleware intercept toutes les requêtes qui ont un content Type JSON
 

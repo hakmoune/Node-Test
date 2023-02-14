@@ -2,6 +2,8 @@ const express = require("express"); // Importer Express
 
 const app = express(); // Pour créer une application Express
 
+app.use(express.json()); //Ce middleware intercept toutes les requêtes qui ont un content Type JSON
+
 //Headrs allow our API to work on deferent servers
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*"); // * = d'accéder à notre API depuis n'importe quelle origine ( '*' ) ;
@@ -17,8 +19,16 @@ app.use((req, res, next) => {
 });
 
 //Middleware
-//la route
-app.use("/api/stuff", (req, res, next) => {
+app.post("/api/stuff", (req, res, next) => {
+  console.log(req.body); // on a accesser au req.body grace express.json()
+  res.status(201).json({
+    //message: "Objet est bien Crée"
+    resData: req.body
+  }); //Pour la creation de ressource le code est 201 + si on n'envoie pas de res l'app va planter
+});
+
+//la route(End Point)
+app.get("/api/stuff", (req, res, next) => {
   //Les données
   const stuff = [
     {

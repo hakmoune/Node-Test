@@ -29,7 +29,7 @@ app.use((req, res, next) => {
   next();
 });
 
-//Middleware
+//Middleware ADD
 app.post("/api/stuff", (req, res, next) => {
   //delete req.body.userId; // Pour supprimer un attr depuis notre objet
   const thing = new Thing({
@@ -40,36 +40,25 @@ app.post("/api/stuff", (req, res, next) => {
     .save() // pour enregistrer votre Thing dans la base de données.
     .then(() =>
       res.status(201).json({
-        resData: req.body
+        resData: thing
       })
     )
     .catch(error => res.status(400).json({ error }));
 });
 
-//la route(End Point)
+//Middleware Git ALL
+//nous utilisons la méthode get() pour répondre uniquement aux demandes GET à cet endpoint ;
 app.get("/api/stuff", (req, res, next) => {
   Thing.find()
     .then(things => res.status(200).json(things))
     .catch(error => res.status(400).json({ error }));
 });
 
+//Middleware Git One
+app.get("/api/stuff/:id", (req, res, next) => {
+  Thing.findOne({ _id: req.params.id })
+    .then(thing => res.status(200).json(thing))
+    .catch(error => res.status(400).json({ error })); // si aucun Thing n'est trouvé ou si une erreur se produit, nous envoyons une erreur 404 au front-end, avec l'erreur générée
+});
+
 module.exports = app; // export app pour puisse l'acceeder dans notre application
-
-/*un middleware
-app.use((req, res, next) => {
-  console.log("Requite Recue!!");
-  next();
-});
-app.use((req, res, next) => {
-  res.status(201);
-  next();
-});
-
-app.use((req, res, next) => {
-  res.json({ message: "votre requite est bien" });
-  next();
-});
-
-app.use((req, res) => {
-  console.log("La reponse a été envoyer avec success");
-});*/

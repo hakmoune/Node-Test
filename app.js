@@ -1,6 +1,8 @@
 const express = require("express"); // Importer Express
 const mongoose = require("mongoose");
 
+const Thing = require("./models/Thing");
+
 const app = express(); // Pour créer une application Express
 
 mongoose
@@ -13,7 +15,7 @@ mongoose
 
 app.use(express.json()); //Ce middleware intercept toutes les requêtes qui ont un content Type JSON
 
-//Headrs allow our API to work on deferent servers
+//Headrs allow our API to work on deferent servers (Surpase CROS error)
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*"); // * = d'accéder à notre API depuis n'importe quelle origine ( '*' ) ;
   res.setHeader(
@@ -29,11 +31,19 @@ app.use((req, res, next) => {
 
 //Middleware
 app.post("/api/stuff", (req, res, next) => {
-  console.log(req.body); // on a accesser au req.body grace express.json()
-  res.status(201).json({
-    //message: "Objet est bien Crée"
-    resData: req.body
-  }); //Pour la creation de ressource le code est 201 + si on n'envoie pas de res l'app va planter
+  //delete req.body.userId; // Pour supprimer un attr depuis notre objet
+  const thing = new Thing({
+    ...req.body // L'opérateur spread ... est utilisé pour faire une copie de tous les éléments de req.body
+  });
+
+  thing
+    .save() // pour enregistrer votre Thing dans la base de données.
+    .then(() =>
+      res.status(201).json({
+        resData: req.body
+      })
+    )
+    .catch(error => res.status(400).json({ error }));
 });
 
 //la route(End Point)

@@ -61,4 +61,11 @@ app.get("/api/stuff/:id", (req, res, next) => {
     .catch(error => res.status(400).json({ error })); // si aucun Thing n'est trouvé ou si une erreur se produit, nous envoyons une erreur 404 au front-end, avec l'erreur générée
 });
 
+//Middleware PUT/Update
+app.put("/api/stuff/:id", (req, res, next) => {
+  Thing.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+    .then(() => res.status(200).json({ resData: req.body }))
+    .catch(error => res.status(400).json({ error }));
+});
+
 module.exports = app; // export app pour puisse l'acceeder dans notre application

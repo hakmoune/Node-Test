@@ -68,4 +68,11 @@ app.put("/api/stuff/:id", (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 });
 
+//Middleware Delete
+app.delete("/api/stuff/:id", (req, res, next) => {
+  Thing.deleteOne({ _id: req.params.id })
+    .then(() => res.status(200).json({ message: "Bien Supprimé !" }))
+    .catch(error => res.status(400).json({ error }));
+});
+
 module.exports = app; // export app pour puisse l'acceeder dans notre application

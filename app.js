@@ -4,6 +4,7 @@ const mongoose = require("mongoose"); // Import mongoose
 const app = express(); // Pour créer une application Express
 
 const stuffRoutes = require("./routes/stuff"); //Importer notre stuff's routes
+const userRoutes = require("./routes/user"); //Importer notre User's routes
 
 //Etablir la cnx avec notre DB
 mongoose
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
 
 app.use(express.json()); //Ce middleware intercept toutes les requêtes qui ont un content Type JSON
 
-app.use("/api/stuff", stuffRoutes); // Enregistrer nos routeurs dans notre application Express
+app.use("/api/stuff", stuffRoutes); // Enregistrer nos routeurs stuff dans notre application Express
+app.use("/api/auth", userRoutes); // Enregistrer nos routeurs user dans notre application Express
 
 module.exports = app; // export app pour puisse l'acceeder dans notre application

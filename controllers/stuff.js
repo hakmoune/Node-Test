@@ -3,7 +3,7 @@ const Thing = require("../models/Thing");
 //ADD
 exports.createThing = (req, res, next) => {
   //delete req.body.userId; // Pour supprimer un attr depuis notre objet
-  //Creera un nouvel objet thing avec l'id qui sera generer automatiquement
+  //Creera un nouvel objet thing avec un id qui sera generer automatiquement
   const thing = new Thing({
     ...req.body // L'opérateur spread ... est utilisé pour faire une copie de tous les éléments de req.body
   });
